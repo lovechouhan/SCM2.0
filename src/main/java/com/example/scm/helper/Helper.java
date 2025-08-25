@@ -46,8 +46,8 @@ public class Helper {
 
     // Email Verification
     public static String getLinkForEmailVerification(String emailToken) {
-      // String link = "https://contact-manager-scm.up.railway.app/auth/verify-email?token=" + emailToken;
-       String link = "http://localhost:8080/auth/verify-email?token=" + emailToken;
+       String link = "http://scm20-production-b544.up.railway.app/auth/verify-email?token=" + emailToken;
+     //  String link = "http://localhost:8080/auth/verify-email?token=" + emailToken;
       return link;
     }
 }
