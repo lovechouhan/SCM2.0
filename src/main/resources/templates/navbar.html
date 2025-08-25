@@ -1,0 +1,65 @@
+<nav th:fragment="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white border border-gray-200 dark:bg-gray-900">
+  <div class="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
+    <!-- Logo aur Brand Name -->
+    <a th:src="@{'/'}" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <img th:src="@{'/images/SCM.png'}" class="h-8" alt="Logo" />
+      <span class="self-center text-2xl font-semibold text-blue-700 whitespace-nowrap dark:text-white">SCM</span>
+    </a>
+
+    <!-- Buttons -->
+    <div class="flex space-x-4 md:order-2 rtl:space-x-reverse">
+      <button id="theme_changer" class="px-3 py-2 bg-gray-200 rounded dark:text-black dark:bg-gray-100">
+        <i class="fa-regular fa-lightbulb"></i> <span>Light</span>
+      </button>
+      <a th:href="@{'/login'}"
+        type="button"
+        class="px-4 py-2 text-sm font-medium text-center text-blue-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-50 dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        Login
+      </a>
+      <a th:href="@{'/register'}"
+        type="button"
+        class="px-4 py-2 text-sm font-medium text-center text-blue-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-50 dark:bg-gray-900 dark:text-blue-400 dark:border-blue-400 dark:hover:bg-gray-800 dark:focus:ring-blue-800">
+        Sign Up
+      </a>
+      <a th:href="@{'#'}"
+        type="button"
+        class="inline-flex p-2 text-sm text-blue-400 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        aria-controls="navbar-cta" aria-expanded="false">
+        <span class="sr-only">Sign Up</span>
+        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-cta">
+      <ul class="flex flex-col p-4 mt-4 font-medium bg-white border border-gray-200 rounded-lg md:p-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+        <li>
+          <a th:href="@{'/home'}"
+             class="block px-3 py-2 text-blue-700 rounded-sm bg-gray-50 hover:bg-gray-100 md:p-0 md:bg-transparent md:text-blue-700 md:dark:text-blue-400 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+            Home
+          </a>
+        </li>
+        <li>
+          <a th:href="@{'/About'}"
+             class="block px-3 py-2 text-blue-700 rounded-sm bg-gray-50 hover:bg-gray-100 md:p-0 md:bg-transparent md:text-blue-700 md:dark:text-blue-400 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+            About
+          </a>
+        </li>
+        <li>
+          <a th:href="@{'/Services'}"
+             class="block px-3 py-2 text-blue-700 rounded-sm bg-gray-50 hover:bg-gray-100 md:p-0 md:bg-transparent md:text-blue-700 md:dark:text-blue-400 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+            Services
+          </a>
+        </li>
+        <li>
+          <a th:href="@{'/Contact'}"
+             class="block px-3 py-2 text-blue-700 rounded-sm bg-gray-50 hover:bg-gray-100 md:p-0 md:bg-transparent md:text-blue-700 md:dark:text-blue-400 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+            Contact
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

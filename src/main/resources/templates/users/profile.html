@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{base}"
+>
+
+<head>
+    <title th:text="${loggedInUser.name}">Profile PAGE</title>
+</head>
+<body>
+    <!-- <div id="content" style="height: 1000px"> -->
+    
+    
+        
+                
+   <div layout:fragment="content" class="pt-20 pl-64" style="height: 1000px;">
+
+    
+         <!-- if user logged in show side bar -->
+    <div th:if="${loggedInUser}">
+        <div th:replace="~{users/sideBAR :: sidebar}"></div>
+    </div>
+
+    <!-- profile card view  -->
+    
+    <!-- Center profile card view on page -->
+<div class="flex items-center justify-center min-h-screen" style="margin-top:6rem;">
+  <div class="relative w-full max-w-md p-6 bg-white shadow-xl rounded-2xl dark:bg-gray-800">
+    <!-- Overlay -->
+  
+     
+
+      <!-- Header -->
+      <div class="flex items-center gap-4">
+        <img th:src="${loggedInUser.profilePic}" alt="avatar" class="w-16 h-16 rounded-full">
+        <div>
+          <h2 th:text="${loggedInUser.name}" class="flex items-center gap-2 text-lg font-semibold text-black-500 dark:text-800">
+
+            <span class="text-blue-500">✔</span>
+            <span class="px-2 py-0.5 text-xs bg-green-100 text-green-700 rounded-md">SCM User</span>
+          </h2>
+          <p th:text="${loggedInUser.email}" class="text-sm text-black-500">siennahewitt@gmail.com</p>
+        </div>
+      </div>
+
+      <!-- Top meta -->
+      <div class="grid grid-cols-4 gap-2 mt-6 text-sm">
+        <div>
+        
+          <p class="font-medium">About</p>
+          <p th:text="${loggedInUser.about}" class="text-gray-500">First seen</p>
+        </div>
+        <div>
+         
+          <p class="font-medium">Contact Number</p>
+           <p th:text="${loggedInUser.phone}" class="text-gray-500">First purchase</p>
+        </div>
+        <div>
+          <p class="text-black-500">Email Verified</p>
+          <p th:text="${loggedInUser.emailVerified ? 'Yes' : 'No'}" class="font-medium">${loggedInUser.emailVerified ? 'Yes' : 'No'}"class="font-medium"></p>
+        </div>
+        <div>
+          <p class="text-black-500">Phone Verified</p>
+          <p th:text="${loggedInUser.phoneVerified ? 'Yes' : 'No'}" class="font-medium">${loggedInUser.phoneVerified ? 'Yes' : 'No'}"class="font-medium"></p>
+        </div>
+      </div>
+
+      <!-- Form -->
+     
+
+      <!-- Footer buttons -->
+      <div class="flex justify-end gap-3 mt-6">
+        
+      </div>
+    
+       
+  
+
+
+
+
+
+
+  <!-- end -->
+  </div>
+</div>
+
+
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html class="light" lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title >SCM</title>
+
+    
+    <!-- flow bite css -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" /> 
+    <link rel="stylesheet" th:href="@{'/css/style.css'}" />
+    <link rel="stylesheet" th:href="@{'/css/style.css'}" />
+       
+    <!-- font awesome cdnjs -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+   
+
+</head>
+<body class="bg-blue-50 dark:bg-gray-900 dark:text-white"> 
+
+
+    
+   <!--common header can be included here-->
+   <!-- looged in user navbar -->
+    <header> 
+    <div th:if="${loggedInUser}">
+        <div th:replace="~{users/user_navbar :: user-navbar}"></div>
+    </div>
+
+   
+    
+    <!-- non logged in user navbar -->
+    <div th:unless="${loggedInUser}">
+        <div th:replace="~{navbar :: navbar}"></div>
+    </div>
+   
+   
+    </header> 
+   
+
+  <main layout:fragment="content">
+        <!-- Child page content yahan inject hoga -->
+    </main>
+   
+ <div layout:fragment="pagescripts"></div>
+
+
+
+    <!-- flow bite content -->
+
+    <!-- common footer -->
+
+    <footer>
+        <!-- Footer -->
+    </footer>
+
+   
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script th:src="@{'/js/script.js'}"></script>
+<script th:src="@{'/js/admin.js'}"></script>
+    <!-- <script th:src="@{/js/contactViewing.js}"></script> -->
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+  const toggleBtn = document.querySelector("[aria-controls='navbar-cta']");
+  const menu = document.getElementById("navbar-cta");
+  if(toggleBtn && menu) {
+    toggleBtn.addEventListener("click", function() {
+      menu.classList.toggle("hidden");
+    });
+  }
+});
+</script>
+</html>
