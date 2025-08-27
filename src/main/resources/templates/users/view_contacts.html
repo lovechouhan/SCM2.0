@@ -10,14 +10,14 @@
 <body>
     <div layout:fragment="content" class="flex min-h-screen pt-20 bg-white dark:bg-gray-900">
         <!-- Sidebar -->
-        <div th:if="${loggedInUser}">
+        <div th:if="${loggedInUser}" class="flex-shrink-0 w-64">
             <div th:replace="~{users/sideBAR :: sidebar}"></div>
         </div>
         <!-- Main Content -->
           
         <div class="flex-1 px-4">
             <div th:replace="~{msg :: msgbox}"></div>
-            <div class="max-w-5xl py-8 mx-auto">
+            <div class="max-w-full py-8 mx-auto">
                 <!-- Search and Export controls above table -->
                 <div class="flex flex-wrap items-center justify-between pb-4 space-x-3 space-y-4 bg-white flex-column md:flex-row md:space-y-0 dark:bg-gray-900">
                     <form th:object="${searchForm}" th:action="@{/user/contact/search}" class="flex flex-wrap items-center space-x-3">
@@ -62,7 +62,7 @@
                 </div>
                 <!-- Table block below -->
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    <div class="flex-col items-center justify-between px-4 bg-white  dark:bg-gray-800 md:flex-row"> 
+                    <div class="flex-col items-center justify-between px-4 bg-white dark:bg-gray-800 md:flex-row"> 
                          <div class="w-full">
             <table id="table1" th:unless="${contacts.isEmpty}" class="w-full min-w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
