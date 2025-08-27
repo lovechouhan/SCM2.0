@@ -10,7 +10,7 @@
 <body>
     <div layout:fragment="content" class="flex min-h-screen pt-20 bg-white dark:bg-gray-900">
         <!-- Sidebar -->
-        <div th:if="${loggedInUser}" class="flex-shrink-0 w-64">
+        <div th:if="${loggedInUser}">
             <div th:replace="~{users/sideBAR :: sidebar}"></div>
         </div>
         <!-- Main Content -->
