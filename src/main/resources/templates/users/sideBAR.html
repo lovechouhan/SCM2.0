@@ -1,63 +1,75 @@
-<aside th:fragment="sidebar" id="logo-sidebar" class="fixed w-64 h-screen pt-20 pl-64 transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-   <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-      <a th:src="@{'/'}" class="flex flex-col items-center ps-2.5 mb-5">
-        
+<!-- Hamburger Button (shown only on mobile screens) -->
+<button id="sidebar-toggle" class="fixed z-50 p-2 bg-white rounded shadow sm:hidden top-4 left-4">
+  <!-- Inline SVG Hamburger Icon -->
+  <svg width="24" height="24" fill="none" stroke="currentColor">
+    <rect y="4" width="24" height="2" rx="1"/>
+    <rect y="11" width="24" height="2" rx="1"/>
+    <rect y="18" width="24" height="2" rx="1"/>
+  </svg>
+</button>
 
-         <img th:src="@{${loggedInUser.profilePic}}" class="h-12 rounded-full me-3 sm:h-16" alt="Logo"/>
-        
+<!-- Backdrop overlay for mobile sidebar -->
+<div id="sidebar-backdrop" class="fixed inset-0 z-40 hidden bg-black bg-opacity-40"></div>
 
-         <span th:text="${loggedInUser.name}"></span>
-          <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Welcome to SCM</span>
-      </a>
-      <ul class="space-y-2 font-medium">
-         <li>
-            <a th:href="@{'/user/dashboard'}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                  <img th:src="@{/images/dashboard.png}" alt="Add Contact" class="w-5 h-5 me-2">
-               <span class="ms-3">Dashboard</span>
-            </a>
-         </li>
-         <li>
-            <a 
-            th:href="@{'/user/profile'}"
-             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <img th:src="@{/images/add-user.png}" alt="Add Contact" class="w-5 h-5 me-2">
-               <span class="ms-3">Profile</span>
-               <span class="inline-flex items-center justify-center px-2 text-sm font-medium text-white bg-green-500 rounded-full ms-3 dark:bg-green-700 dark:text-gray-300"></span>
-            </a>
-         </li>
-         <li>
-            <a th:href="@{'/user/contact/add'}"
-             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               <img th:src="@{/images/plus.png}" alt="Add Contact" class="w-5 h-5 me-2">
-               <span class="ms-3">Add Contact</span>
-               <span class="inline-flex items-center justify-center w-3 h-3 p-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full ms-3 dark:bg-blue-900 dark:text-blue-300"></span>
-            </a>    </li>
-         <li>
-            <a th:href="@{'/user/contact'}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               <img th:src="@{/images/contacts.png}" alt="Add Contact" class="w-5 h-5 me-2">
-                 <span class="ms-3">Contacts</span>
-            </a>
-         </li>
-         <!-- <li>
-            <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <img th:src="@{/images/send.png}" alt="Add Contact" class="w-5 h-5 me-2">
-               <span class="flex-1 ms-3 whitespace-nowrap">Direct Message</span>
-            </a>
-         </li> -->
-         <li>
-            <a th:href="@{'/logout'}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               <img th:src="@{/images/logout.png}" alt="Add Contact" class="w-5 h-5 me-2">
-               <span class="ms-3">Logout</span>
-            </a>
-         </li>
-         <li>
-            <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               <img th:src="@{/images/social-media.png}" alt="Add Contact" class="w-5 h-5 me-2">
-              <span class="ms-3">Feedback</span>
-            </a>
-         </li>
-      </ul>
-   </div>
+<!-- Viewport meta tag for responsive design -->
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover" />
+      
+<!-- Responsive Sidebar -->
+ 
+<aside th:fragment="sidebar"
+       id="logo-sidebar"
+       class="fixed left-0 top-16 z-40
+         w-3/4 sm:w-64
+         h-[calc(100dvh-theme(spacing.16))]
+         overflow-y-auto pt-20
+         transform transition-transform duration-300 -translate-x-full sm:translate-x-0
+         bg-gray-50 dark:bg-gray-800
+         pb-[env(safe-area-inset-bottom)]"
+       aria-label="Sidebar">
+  <div class="flex flex-col h-full px-3 py-4 overflow-y-auto">
+    <a th:href="@{'/'}" class="flex flex-col items-center ps-2.5 mb-5">
+      <img th:src="@{${loggedInUser.profilePic}}" class="h-12 rounded-full me-3 sm:h-16" alt="Logo"/>
+      <span th:text="${loggedInUser.name}"></span>
+      <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Welcome to SCM</span>
+    </a>
+    <ul class="space-y-2 font-medium">
+      <li>
+        <a th:href="@{'/user/dashboard'}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <img th:src="@{/images/dashboard.png}" alt="Dashboard" class="w-5 h-5 me-2">
+          <span class="ms-3">Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a th:href="@{'/user/profile'}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <img th:src="@{/images/add-user.png}" alt="Profile" class="w-5 h-5 me-2">
+          <span class="ms-3">Profile</span>
+        </a>
+      </li>
+      <li>
+        <a th:href="@{'/user/contact/add'}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <img th:src="@{/images/plus.png}" alt="Add Contact" class="w-5 h-5 me-2">
+          <span class="ms-3">Add Contact</span>
+        </a>
+      </li>
+      <li>
+        <a th:href="@{'/user/contact'}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <img th:src="@{/images/contacts.png}" alt="Contacts" class="w-5 h-5 me-2">
+          <span class="ms-3">Contacts</span>
+        </a>
+      </li>
+      <li>
+        <a th:href="@{'/logout'}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <img th:src="@{/images/logout.png}" alt="Logout" class="w-5 h-5 me-2">
+          <span class="ms-3">Logout</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <img th:src="@{/images/social-media.png}" alt="Feedback" class="w-5 h-5 me-2">
+          <span class="ms-3">Feedback</span>
+        </a>
+      </li>
+    </ul>
+  </div>
 </aside>
-
-
