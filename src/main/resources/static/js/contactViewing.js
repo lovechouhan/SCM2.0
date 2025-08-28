@@ -2,7 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log('hello world');
-    const baseURL = "http://localhost:8080";
+    const baseURL = "http://scm20-production-b544.up.railway.app";
     //const baseURL = "https://contact-manager-scm.up.railway.app";
     // declared a varaible for base URL
 
