@@ -15,4 +15,9 @@ public interface  userServices {
     List<User> getAllUsers();
     User getUserByEmail(String email);
     User findByEmailToken(String token);
+    boolean resetPassword(String email, String oldPassword, String newPassword);
+    void updateUserOTP(String email, int oTP);
+    User findByOTP(int otp);
+    void updatePassword(String pass,String email);
+
 }

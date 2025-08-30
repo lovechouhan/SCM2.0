@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title >SCM</title>
 
     
@@ -17,7 +18,7 @@
    
 
 </head>
-<body class="bg-blue-50 dark:bg-gray-900 dark:text-white"> 
+<body class="min-h-screen bg-blue-50 dark:bg-gray-900 dark:text-white"> 
 
 
     
@@ -35,8 +36,11 @@
         <div th:replace="~{navbar :: navbar}"></div>
     </div>
    
+    
    
     </header> 
+
+    
    
 
   <main layout:fragment="content">
@@ -74,4 +78,55 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 </script>
+
+<script>
+const sidebar = document.getElementById('logo-sidebar');
+const backdrop = document.getElementById('sidebar-backdrop');
+const toggleBtn = document.getElementById('sidebar-toggle');
+
+toggleBtn.addEventListener('click', () => {
+  sidebar.classList.remove('-translate-x-full');
+  backdrop.classList.remove('hidden');
+});
+
+backdrop.addEventListener('click', () => {
+  sidebar.classList.add('-translate-x-full');
+  backdrop.classList.add('hidden');
+});
+</script>
+
+<script>
+  // 1) dvh fallback: exposes --vh equals 1% of the visible viewport
+  function setVh() {
+    const vh = (window.visualViewport?.height ?? window.innerHeight) * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+  setVh();
+  addEventListener('resize', setVh);
+  addEventListener('orientationchange', setVh);
+</script>
+
+<script>
+  // 2) Drawer wiring + scroll lock
+  document.addEventListener('DOMContentLoaded', () => {
+    const sidebar  = document.getElementById('logo-sidebar');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    const toggle   = document.getElementById('sidebar-toggle');
+
+    const open = () => {
+      sidebar?.classList.remove('-translate-x-full');
+      backdrop?.classList.remove('hidden');
+      document.documentElement.classList.add('overflow-hidden');    // lock background scroll
+    };
+    const close = () => {
+      sidebar?.classList.add('-translate-x-full');
+      backdrop?.classList.add('hidden');
+      document.documentElement.classList.remove('overflow-hidden'); // unlock
+    };
+
+    toggle?.addEventListener('click', open);
+    backdrop?.addEventListener('click', close);
+  });
+</script>
+
 </html>

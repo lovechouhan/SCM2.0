@@ -22,4 +22,9 @@ public interface UserRepo extends JpaRepository<User, String> {
 
     Optional<User> findByEmailToken(String token);
 
+
+    @Query("SELECT u FROM User u WHERE u.OTPs = ?1")
+    Optional<User> findByOTPToken(int otp);
+
+
 }

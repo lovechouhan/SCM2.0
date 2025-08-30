@@ -59,6 +59,8 @@ public class User implements UserDetails{
    // @Getter(value = AccessLevel.NONE)  // -> ab ye enabled ka getter nahi banega
     private boolean enabled = true;
 
+    private int OTPs;
+
 
     private boolean EmailVerified = false;
     private boolean phoneVerified = false;
@@ -66,7 +68,7 @@ public class User implements UserDetails{
     private String emailToken;
 
     @Enumerated(value = EnumType.STRING)
-    private Providers provider = Providers.SELF;
+    private Providers provider = Providers.SELF; // by default we done provider as SELF
     private String providerId;
 
     @OneToMany(mappedBy = "user", cascade= CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval=true)

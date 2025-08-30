@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import static com.example.scm.Entities.Providers.SELF;
 import com.example.scm.Entities.User;
 import com.example.scm.Form.userForm;
+import com.example.scm.Services.DefinationFolder.OTPservices;
 import com.example.scm.Services.DefinationFolder.userServices;
 import com.example.scm.helper.SessionHelper;
 import com.example.scm.helper.msg;
@@ -24,6 +25,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -43,7 +47,8 @@ public class controller {
     @Autowired
      private PasswordEncoder passwordEncoder;
 
-
+     @Autowired
+     private OTPservices otpService;
 
     @GetMapping("/")
     public String index(Model model) {
@@ -138,7 +143,60 @@ public String register(Model model) {
         return "redirect:/register";
     }
     
-  
-  
-    
+
+
+    @GetMapping("/forgot-password")
+        public String showForgotPasswordPage() {
+        return "ForgotPassword"; // forgot-password.html template
+    }
+
+    @PostMapping("/forgot-password")
+    public String forgotFormOutput(@RequestParam("OTPemail") String OTPemail) {
+        // Process the OTP email
+        // System.out.println("OTP email submitted: " + OTPemail);
+        String Email = OTPemail;
+
+        User user = userService.getUserByEmail(Email);
+        if(user==null) {
+            System.out.println("Email not found: " + Email);
+            return "/login";
+        }
+        String mexistmail = user.getEmail();
+        System.out.println("Existing email2: " + mexistmail);
+        if(mexistmail != null) {
+            System.out.println("Email: " + Email);
+            otpService.sendOTPEmail(Email);
+        }
+        else {
+            System.out.println("Email not found: " + Email);
+            return "/login";
+        }
+        return "/OTP";
+    }
+
+     @PostMapping("/verify-otp")
+    public String verifyOTP(@RequestParam("otp") int otp) {
+        // Validate the OTP
+        User user = userService.findByOTP(otp);
+        int userOTP = user.getOTPs();
+        if(otp == userOTP) {
+            return "/setNewPassword"; 
+        } else {
+            System.out.println("Invalid OTP");
+            return "/home";
+        }
+
+        
+    }
+
+    @PostMapping("/set-new-password")
+    public String setNewPassword(@RequestParam("password") String password, @RequestParam("email") String email) {
+        String mail = email;
+        String pass = password;
+        System.err.println("Email: " + email);
+        System.out.println("New password: " + pass);
+        userService.updatePassword(pass, mail);
+        return "/login";
+    }
+
 }

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{base}"
+>
+
+<head>
+    <title th:text="${loggedInUser.name}">Dashboard PAGE</title>
+</head>
+<body>
+    <!-- <div id="content" style="height: 1000px"> -->
+    
+    
+        
+                
+   <div layout:fragment="content" class="pt-20 pl-64" style="height: 1000px;">
+
+    
+         <!-- if user logged in show side bar -->
+    <div th:if="${loggedInUser}">
+        <div th:replace="~{users/sideBAR :: sidebar}"></div>
+    </div>
+
+    <form th:action="@{'/user/change-password'}" method="post" class="flex items-center justify-center min-h-screen" style="margin-top:6rem;">
+
+        <div>
+        
+        <div class="flex items-center justify-center h-full">
+            <a href="#" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <div class="flex flex-col items-center mb-6">
+                    <img th:src="${loggedInUser.profilePic}" alt="avatar" class="w-16 h-16 mb-4 rounded-full">
+                </div>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Change Your Password Here</h5>
+                <p class="font-normal text-gray-700 dark:text-gray-400"> 
+
+                 <div class="mb-6">
+                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Old Password</label>
+                    <input name="oldPassword" type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required />
+                </div> 
+                <div class="mb-6">
+                    <label for="new_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Password</label>
+                    <input name="newPassword" type="password" id="confirm_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required />
+                </div>
+                <div class="flex justify-between">
+                    <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Change</button>
+                    <button type="reset" class="px-4 py-2 text-gray-800 bg-gray-300 rounded hover:bg-gray-400">Reset</button>
+                </div>
+        </div> 
+
+                </p>
+            </a>
+    </div>
+
+
+
+
+
+
+        
+    </form>
+
+       </div>
+
+       </div>
+   
+    
+    </div>
+</body>
+</html>

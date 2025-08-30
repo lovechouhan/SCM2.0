@@ -22,7 +22,7 @@ public class EmailServiceIMPL implements EmailService {
         message.setTo(to);
         message.setSubject(subject);
         message.setText(body);
-        message.setFrom("lc46200517@gmail.com");
+        message.setFrom("SCM@gmail.com");
 
 
         mailSender.send(message);

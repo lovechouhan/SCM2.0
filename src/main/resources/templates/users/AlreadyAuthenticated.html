@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{base}"
+>
+
+<head>
+    <title th:text="${loggedInUser.name}">GOOGLE & GITHUB Users</title>
+</head>
+<body>
+    <!-- <div id="content" style="height: 1000px"> -->
+    
+    
+        
+                
+   <div layout:fragment="content" class="pt-20 pl-64" style="height: 1000px;">
+
+    
+         <!-- if user logged in show side bar -->
+    <div th:if="${loggedInUser}">
+        <div th:replace="~{users/sideBAR :: sidebar}"></div>
+    </div>
+
+    
+        <h1>You are already authenticated using Google or GitHub!</h1>
+            
+   
+    
+    </div>
+</body>
+</html>

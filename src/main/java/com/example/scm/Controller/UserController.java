@@ -1,6 +1,8 @@
 package com.example.scm.Controller;
 
 
+import java.security.Principal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +10,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.scm.Entities.Providers;
+import com.example.scm.Entities.User;
 import com.example.scm.Services.DefinationFolder.userServices;
+import com.example.scm.helper.Helper;
 
 @Controller
 @RequestMapping("/user")
@@ -35,14 +42,58 @@ public class UserController {
       
         return "users/profile";
     }
- 
-    // user add contact page
 
-    // user view contact page
+    // user settings page
+    @GetMapping("/settings")
+    public String userSettings(Model model, Authentication authentication) {
+        return "users/settings";
+    }
 
-    // user edit contact page
 
-    // user delete contact page
+    // change password page
+    @PostMapping("/change-password")
+    public String userChangePassword(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword,Model model, Authentication authentication,Principal principal) {
+        // Implement password change logic here
 
-    // user search contact page
+        System.out.println("Old Password: " + oldPassword);
+        System.out.println("New Password: " + newPassword);
+
+         if(authentication == null) return "redirect:/AlreadyAuthenticated";
+
+        System.out.println("Adding logged in user information to model");
+        String username = Helper.getEmailofLoggedInUser(authentication);
+        logger.info("$$$$$$$$$$$ {}");
+
+        User user = uzerServices.getUserByEmail(username);
+         
+        System.out.println(user);
+        System.out.println(user.getName());
+        System.out.println(user.getEmail());
+
+        String password = user.getPassword();
+        Providers provider = user.getProvider();
+
+        System.out.println("Current Password: " + password);
+        System.out.println("Provider: " + provider);
+
+        if(provider != Providers.SELF){
+            System.out.println("User is not self-managed");
+            model.addAttribute("message", "You are logged in using " + provider + ". Password change is not allowed.");
+            return "users/AlreadyAuthenticated";
+        }
+        if(password !=null){
+            if(password.equals(oldPassword)){
+                user.setPassword(newPassword);
+                uzerServices.updateUser(user);
+                model.addAttribute("message", "Password changed successfully.");
+            }else{
+                model.addAttribute("message", "Old password is incorrect.");
+            }
+        }
+
+        return "redirect:/user/profile";
+    }
+
+    
+    
 }

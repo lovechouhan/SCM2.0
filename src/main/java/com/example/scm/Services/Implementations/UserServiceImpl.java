@@ -121,7 +121,7 @@ public class UserServiceImpl implements userServices{
         //     logger.warn("User does not exist with ID: {}", userId);
         // }   
         // return exists;
-        // throw new UnsupportedOperationException("Unimplemented method 'isUserExists'");
+      
     }
 
     @Override
@@ -135,7 +135,7 @@ public class UserServiceImpl implements userServices{
         //     logger.warn("User does not exist with email: {}", email);
         // }
         // return exists;
-      //  throw new UnsupportedOperationException("Unimplemented method 'existsByEmail'");
+      
     }
 
     @Override
@@ -167,5 +167,63 @@ public class UserServiceImpl implements userServices{
         }
         return user;
     }
+
+    @Override
+    public boolean resetPassword(String email, String oldPassword, String newPassword) {
+       User user  = userRepo.findByEmail(email).orElse(null);
+       if (user != null && passwordEncoder.matches(oldPassword, user.getPassword())) {
+           user.setPassword(passwordEncoder.encode(newPassword));
+           userRepo.save(user);
+           logger.info("Password reset successfully for email: {}", user.getEmail());
+           return true;
+       } else {
+           logger.warn("Password reset failed for email: {}", user.getEmail());
+           return false;
+       }
+
+    }
+
+    @Override
+    public void updateUserOTP(String email, int oTP) {
+        User user = userRepo.findByEmail(email).orElse(null);
+        if (user != null) {
+            user.setOTPs(oTP);
+            userRepo.save(user);
+            logger.info("OTP updated successfully for email: {}", email);
+        } else {
+            logger.warn("No user found with email: {}", email);
+        }
+    }
+
+    @Override
+    public User findByOTP(int otp) {
+       User user = userRepo.findByOTPToken(otp).orElse(null);
+       int userOTP = user.getOTPs();
+       System.out.println("User ka OTP2: " + userOTP);
+        return user;
+    }
+
+
+
+
+    @Override
+    public void updatePassword(String pass, String email) {
+        User user = userRepo.findByEmail(email).orElse(null);
+        System.out.println("User mila found: " + user);
+        System.out.println("Old Password: " + user.getPassword());
+        user.setPassword(passwordEncoder.encode(pass));
+        userRepo.save(user);
+        System.out.println("Password updated successfully for email: " + user.getPassword());
+       
+        // if (user != null) {
+        //     user.setPassword(passwordEncoder.encode(pass));
+        //     userRepo.save(user);
+        //     logger.info("Password updated successfully for email: {}", user.getEmail());
+        // } else {
+        //     logger.warn("No user found with the provided token");
+        // }
+    }
+
+   
 
 }

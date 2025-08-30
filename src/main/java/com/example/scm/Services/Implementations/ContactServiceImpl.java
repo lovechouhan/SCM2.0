@@ -69,15 +69,7 @@ public class ContactServiceImpl implements ContactServices  {
         return contactRepo.findAll();
     }
 
-   /*  @Override
-    @Transactional
-    public void deleteContact(String id) {
-        var contact = contactRepo.findById(id).orElseThrow(() -> new RuntimeException("Contact not found"));
-        contactRepo.delete(contact);
-        logger.info("Contact is Now Deleted, id: {}", id);
-        //System.out.println("Contact deleted successfully");
-    }
-    */
+   
     @Override
     @Transactional
     public void deleteContact(String id) {
