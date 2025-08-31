@@ -62,7 +62,7 @@ public class SecurityConfig {
         httpSecurity.formLogin(formLogin->{
             formLogin.loginPage("/login") // custom login page
                     .loginProcessingUrl("/authenticate") // form action url
-                    .defaultSuccessUrl("/user/profile", true) // after successful login redirect to home page
+                    .defaultSuccessUrl("/user/dashboard", true) // after successful login redirect to home page
                     .failureForwardUrl("/login?error=true") // if login fails, redirect to login page with error
                     .usernameParameter("email") // form field name for username
                     .passwordParameter("password") ;// form field name for password
