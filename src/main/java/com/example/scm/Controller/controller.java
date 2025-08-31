@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import static com.example.scm.Entities.Providers.SELF;
@@ -25,8 +26,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -150,53 +149,50 @@ public String register(Model model) {
         return "ForgotPassword"; // forgot-password.html template
     }
 
-    @PostMapping("/forgot-password")
-    public String forgotFormOutput(@RequestParam("OTPemail") String OTPemail) {
-        // Process the OTP email
-        // System.out.println("OTP email submitted: " + OTPemail);
-        String Email = OTPemail;
+   @PostMapping("/forgot-password")
+    public String forgotFormOutput(@RequestParam("OTPemail") String OTPemail, Model model) {
+        String email = OTPemail;
 
-        User user = userService.getUserByEmail(Email);
-        if(user==null) {
-            System.out.println("Email not found: " + Email);
-            return "/login";
+        User user = userService.getUserByEmail(email);
+        if (user == null) {
+           //model.addAttribute("msg", "❌ Email not found. Please try again.");
+            model.addAttribute("msg", new msg("❌ Email not found.", msgType.red));
+            return "ForgotPassword"; // stay on same page
         }
-        String mexistmail = user.getEmail();
-        System.out.println("Existing email2: " + mexistmail);
-        if(mexistmail != null) {
-            System.out.println("Email: " + Email);
-            otpService.sendOTPEmail(Email);
+
+        try {
+            otpService.sendOTPEmail(email);
+          // model.addAttribute("msg", new msg("✅ OTP sent", msgType.green));
+            model.addAttribute("msg", new msg("✅ OTP sent successfully!", msgType.green));
+            return "OTP"; // go to OTP entry page
+
+        } catch (Exception e) {
+            // Graceful fallback if email fails
+            model.addAttribute("msg", new msg("⚠️ Could not send OTP right now. Please try again later.", msgType.red));
+            return "ForgotPassword"; // stay on forgot page instead of error 500
         }
-        else {
-            System.out.println("Email not found: " + Email);
-            return "/login";
-        }
-        return "/OTP";
     }
 
-     @PostMapping("/verify-otp")
-    public String verifyOTP(@RequestParam("otp") int otp) {
-        // Validate the OTP
+    @PostMapping("/verify-otp")
+    public String verifyOTP(@RequestParam("otp") int otp, Model model) {
         User user = userService.findByOTP(otp);
-        int userOTP = user.getOTPs();
-        if(otp == userOTP) {
-            return "/setNewPassword"; 
-        } else {
-            System.out.println("Invalid OTP");
-            return "/home";
-        }
 
-        
+        if (user != null && otp == user.getOTPs()) {
+            model.addAttribute("msg", new msg("✅ OTP verified. Please set your new password.", msgType.green));
+            return "setNewPassword"; // set-new-password.html
+        } else {
+            model.addAttribute("msg", new msg("❌ Invalid OTP. Please try again.", msgType.red));
+            return "OTP";
+        }
     }
 
-    @PostMapping("/set-new-password")
-    public String setNewPassword(@RequestParam("password") String password, @RequestParam("email") String email) {
-        String mail = email;
-        String pass = password;
-        System.err.println("Email: " + email);
-        System.out.println("New password: " + pass);
-        userService.updatePassword(pass, mail);
-        return "/login";
+   @PostMapping("/set-new-password")
+    public String setNewPassword(@RequestParam("password") String password,
+                                 @RequestParam("email") String email,
+                                 Model model) {
+        userService.updatePassword(password, email);
+        model.addAttribute("msg", new msg("✅ Password updated successfully. Please login.", msgType.green));
+        return "login"; // login.html
     }
 
 }
