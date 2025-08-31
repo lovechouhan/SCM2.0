@@ -18,6 +18,8 @@ import com.example.scm.Entities.Providers;
 import com.example.scm.Entities.User;
 import com.example.scm.Services.DefinationFolder.userServices;
 import com.example.scm.helper.Helper;
+import com.example.scm.helper.msg;
+import com.example.scm.helper.msgType;
 
 @Controller
 @RequestMapping("/user")
@@ -78,20 +80,23 @@ public class UserController {
 
         if(provider != Providers.SELF){
             System.out.println("User is not self-managed");
-            model.addAttribute("message", "You are logged in using " + provider + ". Password change is not allowed.");
+            model.addAttribute("message", new msg("❌ You cannot change password for " + provider + " authenticated accounts.", msgType.red));
             return "users/AlreadyAuthenticated";
         }
         if(password !=null){
             if(password.equals(oldPassword)){
                 user.setPassword(newPassword);
                 uzerServices.updateUser(user);
-                model.addAttribute("message", "Password changed successfully.");
+                model.addAttribute("message", new msg("✅ Password changed successfully.", msgType.green));
+                return "redirect:/user/profile";
             }else{
-                model.addAttribute("message", "Old password is incorrect.");
+                model.addAttribute("message", new msg("❌ Old password is incorrect.", msgType.red));
+                return "redirect:/user/profile";
             }
         }
 
         return "redirect:/user/profile";
+
     }
 
     
