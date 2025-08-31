@@ -17,7 +17,12 @@ layout:decorate="~{base}"
 
     <div class="w-3/4 p-4 mx-auto bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700" style="margin-top:6rem;">
 
-        
+        <!-- ✅ Message Section -->
+            <div th:if="${msg}" class="p-3 mb-4 text-sm text-gray-800 bg-gray-100 rounded-lg">
+                <p th:text="${msg.content}"></p>
+            </div>
+
+
 
         <form 
         method="post"
