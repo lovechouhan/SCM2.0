@@ -43,6 +43,13 @@ public class OTPserviceIMPL implements  OTPservices{
         message.setFrom("SCM@gmail.com");
 
 
-        mailSender.send(message);
+        try {
+    mailSender.send(message);
+    System.out.println("OTP sent to email: " + email);
+    } catch (Exception e) {
+                System.err.println("Failed to send OTP email: " + e.getMessage());
+                throw new RuntimeException("Unable to send OTP email right now.");
+      }
+
     }
 }
