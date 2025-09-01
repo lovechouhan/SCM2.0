@@ -5,7 +5,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.example.scm.Reposititers.UserRepo;
 import com.example.scm.Services.DefinationFolder.OTPservices;
 import com.example.scm.Services.DefinationFolder.userServices;
 
@@ -45,7 +44,7 @@ public class OTPserviceIMPL implements  OTPservices{
 
         try {
     mailSender.send(message);
-    System.out.println("OTP sent to email: " + email);
+    
     } catch (Exception e) {
                 System.err.println("Failed to send OTP email: " + e.getMessage());
                 throw new RuntimeException("Unable to send OTP email right now.");
